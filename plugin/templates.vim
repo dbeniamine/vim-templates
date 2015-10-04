@@ -4,12 +4,17 @@
 "
 "==============================================================================
 
-if (!exists("g:templ_templates_install_dir"))
+if !exists("g:templ_templates_install_dir")
     let g:templ_templates_install_dir="~/.vim"
 endif
 
-let g:templ_templatesdir=g:templ_templates_install_dir."/templates/"
-let g:templ_Makefilesdir=g:templ_templates_install_dir."/Makefiles/"
+if !exists("g:templ_templatesdir")
+    let g:templ_templatesdir=g:templ_templates_install_dir."/templates/"
+endif
+
+if !exists("g:templ_Makefilesdir")
+    let g:templ_Makefilesdir=g:templ_templates_install_dir."/Makefiles/"
+endif
 
 if( !exists("g:templ_beamer_name"))
     let g:templ_beamer_name='slides.tex'
