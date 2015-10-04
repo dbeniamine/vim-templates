@@ -1,62 +1,41 @@
-"========================= Templates plugin ===================================
-"
-"   Insert templates and Makefiles by extension when creating a new file
-"
-"==============================================================================
+" File:        vim-templates.vim
+" Description: A lazy plugin to manage templates and Makefiles
+" Author:      David Beniamine <David@Beniamine.net>
+" License:     Vim license
+" Website:     http://github.com/dbeniamine/vim-templates.vim
+" Version:     0.1
 
-if !exists("g:templ_templates_install_dir")
-    let g:templ_templates_install_dir="~/.vim"
+" Don't load twice {{{1
+if exists("g:loaded_VimTemplates")
+    finish
+endif
+let g:loaded_VimTemplates=1
+
+" Save context {{{1
+let s:save_cpo = &cpo
+set cpo&vim
+
+
+let g:VimTemplates_install_dir=expand('<sfile>:p:h').'/..'
+
+if !exists("g:VimTemplates_templatesdir")
+    let g:VimTemplates_templatesdir=g:VimTemplates_install_dir."/templates/"
 endif
 
-if !exists("g:templ_templatesdir")
-    let g:templ_templatesdir=g:templ_templates_install_dir."/templates/"
+if !exists("g:VimTemplates_Makefilesdir")
+    let g:VimTemplates_Makefilesdir=g:VimTemplates_install_dir."/Makefiles/"
 endif
 
-if !exists("g:templ_Makefilesdir")
-    let g:templ_Makefilesdir=g:templ_templates_install_dir."/Makefiles/"
-endif
-
-if( !exists("g:templ_beamer_name"))
-    let g:templ_beamer_name='slides.tex'
+if( !exists("g:VimTemplates_beamer_name"))
+    let g:VimTemplates_beamer_name='slides.tex'
 endif
 
 " Insert headers if any
-au BufNewFile * call ImportTemplates()
+au BufNewFile * call VimTemplates#ImportTemplates()
 
 " Commands
-command! -nargs=0 ImportMakefile call ImportMakefile()
-command! -nargs=0 ImportTemplates call ImportTemplates()
+command! -nargs=0 ImportMakefile call VimTemplates#ImportMakefile()
+command! -nargs=0 ImportTemplates call VimTemplates#ImportTemplates()
 
-" Functions {{{1
-
-" Insert headers corresponding to the file extension
-function! ImportTemplates()
-    "insert headers
-    if expand('%')=~g:templ_beamer_name
-        let header=g:templ_templatesdir . "beamer.tex"
-        let type="beamer"
-    else
-        let type=expand('%:e')
-        let header=g:templ_templatesdir . "template.". l:type
-    endif
-    try
-        execute "0read" header
-    catch
-    endtry
-    " Ask for Makefile import
-    let mkf=g:templ_Makefilesdir.'Makefile_'.&ft
-    if empty(glob("./Makefile")) && !empty(glob(l:mkf)) &&
-                \ input("Do you want to import an existing makefile ? [y/N]") == "y"
-        call ImportMakefile()
-    endif
-    execute "normal \<C-m>\<Right>"
-endfunction
-
-" Import makefile based on the filetype
-function! ImportMakefile()
-    if empty(glob("./Makefile")) ||
-                \ input("There is already one Makefile, do you want to overwrite it ? [y/N]")=="y"
-        let mk=g:templ_Makefilesdir. "Makefile_" . &ft
-        exe '!cp  -v ' l:mk 'Makefile'
-    endif
-endfunction
+" Restore context {{{1
+let &cpo = s:save_cpo

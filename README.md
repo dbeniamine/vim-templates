@@ -32,7 +32,7 @@ having copied the files.  Then you will be able to get the commands help with:
 
 
 1.  Each time a new file is opened, vim-templates looks in
-`g:templ_templatesdir` (see <a href="#configuration">configuration</a>) for a
+`g:VimTemplates_templatesdir` (see <a href="#configuration">configuration</a>) for a
 suitable template aka a file named `template.<ft>` where `<ft>` is the
 filetype of the current file, for instance: `template.tex` for a latex file.
 If such a file exists it will be read.
@@ -42,10 +42,10 @@ called `beamer.tex` instead of ̀`templates.tex` which allow you to define a
 normal latex template and a beamer template. You can set the name of your
 beamer presentation by adding the following to yout vimrc:
  
-        let g:templ_beamer_name='slides.tex'
+        let g:VimTemplates_beamer_name='slides.tex'
 
 3.  Then if no Makefile is present in the current directory, Vim-templates
-will look in `g:templ_Makefilesdir` (see
+will look in `g:VimTemplates_Makefilesdir` (see
 <a href="#configuration">configuration</a>) for a file called `Makefile_<ft>` if
 such a file exists, it will prompt you to import it.
 
@@ -68,9 +68,14 @@ By defaults templates and Makefiles are searched in
 `path/to/vim-templates/templates` and `path/to/vim-templates/Makefiles` to
 change these directories add the following to your vimrc:
 
-    let g:templ_templatesdir="~/.vim/templates/"
-    let g:templ_Makefilesdir="~/.vim/Makefiles/"
+    let g:VimTemplates_templatesdir="~/.vim/templates/"
+    let g:VimTemplates_Makefilesdir="~/.vim/Makefiles/"
 
 It is also possible to set a default beamer file name:
 
-    let g:templ_beamer_name='slides.tex'
+    let g:VimTemplates_beamer_name='slides.tex'
+
+## License
+
+Copyright (c) David Beniamine. Distributed under the same terms as Vim itself.
+See `:help license`.
