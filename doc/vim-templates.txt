@@ -1,0 +1,41 @@
+*Vim-templates*
+
+A lazy vim plugin to manage template and Makefiles.
+
+===============================================================================
+How does it work                                       *vim-templates-how-to* ~
+
+
+                                                      *vim-templates-templates*
+1.  Each time a new file is opened, vim-templates looks in
+`/path/to/bundles/vim-templates/templates` for a suitable template aka a file
+named `template.<ft>` where `<ft>` is the filetype of the current file, for
+instance: `template.tex` for a latex file. If such a file exists it will be
+read.
+                                                         *vim-templates-beamer*
+2.  If you open a file named `slide.tex`, Vim-templates will look for a file
+called `beamer.tex` instead of ̀`templates.tex` which allow you to define a
+normal latex template and a beamer template. You can set the name of your
+beamer presentation by adding the following to yout vimrc:
+>
+    let g:templ_beamer_name='slides.tex'
+<
+                                                      *vim-templates-makefiles*
+3.  Then if no Makefile is present in the current directory, Vim-templates will
+look in `/path/to/bundles/vim-templates/Makefiles` for a file called
+`Makefile_<ft>` if such a file exists, it will prompt you to import it.
+
+
+===============================================================================
+Commands                                             *vim-templates-commands* ~
+
+Vim-templates provides two commands:
+>
+    :ImportTemplates
+<
+Look for a template file then for a Makefile a described in previous section.
+>
+    :ImportMakefile
+<
+Look for a Makefile a described in previous section, if found import it.
+Prompt you only if a Makefile is present in the current directory.
