@@ -26,7 +26,7 @@ function! VimTemplates#ImportTemplates()
     let mkf=g:VimTemplates_Makefilesdir.'Makefile_'.&ft
     if empty(glob("./Makefile")) && !empty(glob(l:mkf)) &&
                 \ input("Do you want to import an existing makefile ? [y/N]") == "y"
-        call ImportMakefile()
+        call VimTemplates#ImportMakefile()
     endif
     execute "normal \<C-m>\<Right>"
 endfunction
